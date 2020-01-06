@@ -196,4 +196,10 @@ class ActiveStorage::VariantTest < ActiveSupport::TestCase
   ensure
     ActiveStorage.variant_processor = :mini_magick
   end
+
+  test "convert to other formats" do
+    blob = create_file_blob(filename: "racecar.jpg")
+    variant = blob.variant(convert: :webp).processed
+    assert_match(/racecar\.webp/, variant.url)
+  end
 end
